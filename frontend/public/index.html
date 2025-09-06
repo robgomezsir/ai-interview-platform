@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="pt-br" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plataforma de Entrevista com IA</title>
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/main.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 flex items-center justify-center min-h-full p-4 font-[Inter]">
+    <div class="w-full max-w-2xl mx-auto text-center">
+        <header class="mb-12">
+            <h1 class="text-4xl md:text-5xl font-bold text-slate-900 dark:text-white tracking-tight">
+                Plataforma de Entrevista com IA
+            </h1>
+            <p class="mt-4 text-lg text-slate-600 dark:text-slate-400">
+                Selecione seu perfil para continuar.
+            </p>
+        </header>
+
+        <main class="grid md:grid-cols-2 gap-8">
+            <a href="chat.html" class="group bg-white dark:bg-slate-800/50 p-8 rounded-xl shadow-lg hover:shadow-2xl dark:hover:bg-slate-800 transition-all duration-300 transform hover:-translate-y-1 border border-transparent hover:border-blue-500">
+                <div class="flex flex-col items-center">
+                    <div class="bg-blue-100 dark:bg-blue-900/50 p-4 rounded-full mb-6">
+                        <i data-lucide="user-round" class="w-10 h-10 text-blue-600 dark:text-blue-400"></i>
+                    </div>
+                    <h2 class="text-2xl font-semibold text-slate-900 dark:text-white">Candidato</h2>
+                    <p class="mt-2 text-slate-500 dark:text-slate-400">Iniciar uma nova entrevista simulada.</p>
+                    <div class="mt-6 text-blue-600 dark:text-blue-400 font-medium flex items-center gap-2">
+                        Começar Agora
+                        <i data-lucide="arrow-right" class="w-4 h-4 transition-transform group-hover:translate-x-1"></i>
+                    </div>
+                </div>
+            </a>
+            
+            <a href="dashboard.html" class="group bg-white dark:bg-slate-800/50 p-8 rounded-xl shadow-lg hover:shadow-2xl dark:hover:bg-slate-800 transition-all duration-300 transform hover:-translate-y-1 border border-transparent hover:border-indigo-500">
+                <div class="flex flex-col items-center">
+                    <div class="bg-indigo-100 dark:bg-indigo-900/50 p-4 rounded-full mb-6">
+                        <i data-lucide="layout-dashboard" class="w-10 h-10 text-indigo-600 dark:text-indigo-400"></i>
+                    </div>
+                    <h2 class="text-2xl font-semibold text-slate-900 dark:text-white">Analista de RH</h2>
+                    <p class="mt-2 text-slate-500 dark:text-slate-400">Acessar o painel de avaliações.</p>
+                     <div class="mt-6 text-indigo-600 dark:text-indigo-400 font-medium flex items-center gap-2">
+                        Acessar Painel
+                        <i data-lucide="arrow-right" class="w-4 h-4 transition-transform group-hover:translate-x-1"></i>
+                    </div>
+                </div>
+            </a>
+        </main>
+        
+        <footer class="mt-16 text-sm text-slate-500">
+            <p>&copy; 2025 AI Interview Platform. Todos os direitos reservados.</p>
+        </footer>
+    </div>
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>

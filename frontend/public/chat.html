@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-br" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entrevista com IA - Candidato</title>
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/main.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="bg-slate-100 dark:bg-slate-900 font-[Inter] flex flex-col h-screen">
+
+    <header class="bg-white dark:bg-slate-950/70 backdrop-blur-sm border-b border-slate-200 dark:border-slate-800 shadow-sm sticky top-0 z-10">
+        <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+            <a href="index.html" class="flex items-center gap-2">
+                <i data-lucide="bot-message-square" class="text-blue-600 dark:text-blue-400 w-8 h-8"></i>
+                <h1 class="text-xl font-bold text-slate-800 dark:text-slate-100">Entrevista Simulada</h1>
+            </a>
+            <div id="job-profile-display" class="hidden md:block text-sm text-slate-600 dark:text-slate-400 font-medium bg-slate-100 dark:bg-slate-800 px-3 py-1 rounded-full"></div>
+        </div>
+    </header>
+
+    <main class="flex-1 flex flex-col items-center justify-center p-4">
+        
+        <!-- Start Interview Form -->
+        <div id="start-interview-form-container" class="w-full max-w-md bg-white dark:bg-slate-800 p-8 rounded-lg shadow-md">
+            <h2 class="text-2xl font-bold text-center text-slate-900 dark:text-white mb-2">Iniciar Entrevista</h2>
+            <p class="text-center text-slate-500 dark:text-slate-400 mb-6">Preencha seus dados para começar.</p>
+            <form id="start-interview-form">
+                <div class="mb-4">
+                    <label for="name" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Nome Completo</label>
+                    <input type="text" id="name" name="name" required class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-slate-900 dark:text-slate-100" placeholder="Seu nome">
+                    <div id="name-error" class="text-red-500 text-sm mt-1 hidden"></div>
+                </div>
+                <div class="mb-6">
+                    <label for="email" class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Email</label>
+                    <input type="email" id="email" name="email" required class="w-full px-3 py-2 bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 text-slate-900 dark:text-slate-100" placeholder="seu.email@exemplo.com">
+                    <div id="email-error" class="text-red-500 text-sm mt-1 hidden"></div>
+                </div>
+                <button type="submit" id="start-btn" class="w-full bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded-md transition duration-300 flex items-center justify-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed">
+                    <span id="start-btn-text">Começar Entrevista</span>
+                    <div id="start-spinner" class="spinner hidden"></div>
+                </button>
+            </form>
+        </div>
+
+        <!-- Chat Container -->
+        <div id="chat-container" class="hidden w-full max-w-3xl h-full flex flex-col bg-white dark:bg-slate-800 shadow-xl rounded-lg border border-slate-200 dark:border-slate-700">
+            <div id="message-list" class="flex-1 p-6 overflow-y-auto">
+            </div>
+            <div id="typing-indicator" class="px-6 pb-2 hidden">
+            </div>
+            <div class="p-4 border-t border-slate-200 dark:border-slate-700 bg-slate-50 dark:bg-slate-900/50 rounded-b-lg">
+                <form id="message-form" class="flex items-center gap-3">
+                    <input type="text" id="message-input" placeholder="Digite sua resposta..." autocomplete="off" class="flex-1 px-4 py-2 bg-white dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500 text-slate-900 dark:text-slate-100 transition">
+                    <button type="submit" id="send-button" class="bg-blue-600 hover:bg-blue-700 text-white rounded-full p-3 flex items-center justify-center transition duration-300 disabled:bg-slate-400 disabled:cursor-not-allowed">
+                        <i data-lucide="send-horizontal" class="w-5 h-5"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        lucide.createIcons();
+    </script>
+    <script type="module" src="assets/js/chat.js"></script>
+</body>
+</html>

@@ -1,0 +1,48 @@
+{
+  "name": "ai-interview-platform",
+  "version": "2.0.0",
+  "description": "Plataforma de Entrevista com IA - Sistema completo refatorado e otimizado",
+  "main": "backend/src/index.js",
+  "scripts": {
+    "dev": "docker-compose up --build",
+    "start": "docker-compose up -d",
+    "stop": "docker-compose down",
+    "restart": "docker-compose restart",
+    "logs": "docker-compose logs -f",
+    "clean": "docker-compose down -v --remove-orphans",
+    "test": "cd backend && npm test",
+    "test:coverage": "cd backend && npm run test:coverage",
+    "lint": "cd backend && npm run lint",
+    "format": "cd backend && npm run format",
+    "db:migrate": "cd backend && npm run prisma:migrate",
+    "db:generate": "cd backend && npm run prisma:generate",
+    "db:studio": "cd backend && npm run prisma:studio",
+    "setup": "npm install && cd backend && npm install && cd ../frontend && npm install",
+    "build": "docker-compose build",
+    "deploy": "docker-compose -f docker-compose.prod.yml up -d"
+  },
+  "keywords": [
+    "ai",
+    "interview",
+    "assessment",
+    "hr",
+    "nodejs",
+    "react",
+    "prisma",
+    "postgresql"
+  ],
+  "author": "AI Interview Platform Team",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/your-org/ai-interview-platform.git"
+  },
+  "bugs": {
+    "url": "https://github.com/your-org/ai-interview-platform/issues"
+  },
+  "homepage": "https://github.com/your-org/ai-interview-platform#readme",
+  "engines": {
+    "node": ">=18.0.0",
+    "npm": ">=8.0.0"
+  }
+}

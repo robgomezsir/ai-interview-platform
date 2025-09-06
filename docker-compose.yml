@@ -1,0 +1,71 @@
+version: '3.8'
+
+services:
+  # PostgreSQL Database
+  postgres:
+    image: postgres:15-alpine
+    container_name: ai-interview-postgres
+    environment:
+      POSTGRES_DB: ai_interview_platform
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres123
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./docker/postgres/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - ai-interview-network
+    restart: unless-stopped
+
+  # Backend API
+  backend:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    container_name: ai-interview-backend
+    environment:
+      NODE_ENV: development
+      DATABASE_URL: postgresql://postgres:postgres123@postgres:5432/ai_interview_platform
+      PORT: 3000
+      HOST: 0.0.0.0
+      OPENROUTER_API_KEY: ${OPENROUTER_API_KEY}
+      AI_MODEL: deepseek/deepseek-chat-v3-0324:free
+      AI_API_URL: https://openrouter.ai/api/v1/chat/completions
+      CORS_ORIGIN: http://localhost:8080
+      LOG_LEVEL: info
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./backend:/app
+      - /app/node_modules
+      - ./logs:/app/logs
+    depends_on:
+      - postgres
+    networks:
+      - ai-interview-network
+    restart: unless-stopped
+    command: npm run dev
+
+  # Frontend (Nginx)
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    container_name: ai-interview-frontend
+    ports:
+      - "8080:80"
+    volumes:
+      - ./frontend/public:/usr/share/nginx/html
+    depends_on:
+      - backend
+    networks:
+      - ai-interview-network
+    restart: unless-stopped
+
+volumes:
+  postgres_data:
+
+networks:
+  ai-interview-network:
+    driver: bridge

@@ -1,0 +1,54 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Candidate {
+  id        String      @id @default(uuid())
+  name      String
+  email     String      @unique
+  createdAt DateTime    @default(now()) @map("created_at")
+  updatedAt DateTime    @updatedAt @map("updated_at")
+  
+  interviews Interview[]
+
+  @@map("candidates")
+}
+
+model Interview {
+  id           String      @id @default(uuid())
+  candidate    Candidate   @relation(fields: [candidateId], references: [id], onDelete: Cascade)
+  candidateId  String      @map("candidate_id")
+  jobProfile   String      @map("job_profile")
+  status       String      @default("IN_PROGRESS")
+  chatHistory  String?     @map("chat_history")
+  startedAt    DateTime    @default(now()) @map("started_at")
+  completedAt  DateTime?   @map("completed_at")
+  createdAt    DateTime    @default(now()) @map("created_at")
+  updatedAt    DateTime    @updatedAt @map("updated_at")
+  
+  evaluation   Evaluation?
+
+  @@map("interviews")
+}
+
+model Evaluation {
+  id             String    @id @default(uuid())
+  interview      Interview @relation(fields: [interviewId], references: [id], onDelete: Cascade)
+  interviewId    String    @unique @map("interview_id")
+  overallScore   Float?    @map("overall_score")
+  evaluationData String    @map("evaluation_data")
+  createdAt      DateTime  @default(now()) @map("created_at")
+  updatedAt      DateTime  @updatedAt @map("updated_at")
+
+  @@map("evaluations")
+}
+
+// Status values: "IN_PROGRESS", "COMPLETED", "EVALUATED"
