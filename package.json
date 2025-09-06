@@ -19,7 +19,9 @@
     "db:studio": "cd backend && npm run prisma:studio",
     "setup": "npm install && cd backend && npm install && cd ../frontend && npm install",
     "build": "docker-compose build",
-    "deploy": "docker-compose -f docker-compose.prod.yml up -d"
+    "deploy": "docker-compose -f docker-compose.prod.yml up -d",
+    "vercel-build": "cd backend && npm install && npx prisma generate",
+    "vercel-dev": "cd backend && npm run dev"
   },
   "keywords": [
     "ai",
