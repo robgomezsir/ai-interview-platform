@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="pt-br" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Analista de RH</title>
+    <script src="https://cdn.tailwindcss.com?plugins=typography"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="assets/css/main.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+</head>
+<body class="bg-slate-50 dark:bg-slate-900 text-slate-800 dark:text-slate-200 font-[Inter] min-h-screen">
+    <header class="bg-white dark:bg-slate-800 shadow-sm border-b border-slate-200 dark:border-slate-700">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="index.html" class="flex items-center gap-2">
+                <i data-lucide="layout-dashboard" class="text-indigo-600 dark:text-indigo-400 w-8 h-8"></i>
+                <h1 class="text-xl font-bold text-slate-800 dark:text-slate-100">Dashboard RH</h1>
+            </a>
+            <div class="flex items-center gap-4">
+                <button id="refresh-btn" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-md transition duration-300 flex items-center gap-2">
+                    <i data-lucide="refresh-cw" class="w-4 h-4"></i>
+                    Atualizar
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 py-8">
+        <!-- Navigation Tabs -->
+        <div class="mb-8">
+            <div class="border-b border-slate-200 dark:border-slate-700">
+                <nav class="-mb-px flex space-x-8">
+                    <button id="interviews-tab" class="tab-button active py-2 px-1 border-b-2 border-indigo-500 text-indigo-600 dark:text-indigo-400 font-medium text-sm">
+                        <i data-lucide="users" class="w-4 h-4 inline mr-2"></i>
+                        Entrevistas
+                    </button>
+                    <button id="training-tab" class="tab-button py-2 px-1 border-b-2 border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-300 font-medium text-sm">
+                        <i data-lucide="brain" class="w-4 h-4 inline mr-2"></i>
+                        Treinamento IA
+                    </button>
+                    <button id="analytics-tab" class="tab-button py-2 px-1 border-b-2 border-transparent text-slate-500 dark:text-slate-400 hover:text-slate-700 dark:hover:text-slate-300 font-medium text-sm">
+                        <i data-lucide="bar-chart-3" class="w-4 h-4 inline mr-2"></i>
+                        Analytics
+                    </button>
+                </nav>
+            </div>
+        </div>
+
+        <!-- Interviews Tab Content -->
+        <div id="interviews-content" class="tab-content">
+            <div class="mb-8">
+                <h2 class="text-3xl font-bold text-slate-900 dark:text-white mb-2">Avaliações de Entrevistas</h2>
+                <p class="text-slate-600 dark:text-slate-400">Monitore e analise as entrevistas realizadas pelos candidatos.</p>
+            </div>
+
+        <!-- Stats Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+            <div class="bg-white dark:bg-slate-800 p-6 rounded-lg shadow-sm border border-slate-200 dark:border-slate-700">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm font-medium text-slate-600 dark:text-slate-400">Total de Entrevistas</p>
+                        <p id="total-interviews" class="text-2xl font-bold text-slate-900 dark:text-white">-</p>
+                    </div>
+                    <div class="bg-blue-100 dark:bg-blue-900/50 p-3 rounded-full">
+                        <i data-lucide="users" class="w-6 h-6 text-blue-600 dark:text-blue-400"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white dark:bg-slate-800 p-6 rounded-lg shadow-sm border border-slate-200 dark:border-slate-700">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm font-medium text-slate-600 dark:text-slate-400">Entrevistas Hoje</p>
+                        <p id="today-interviews" class="text-2xl font-bold text-slate-900 dark:text-white">-</p>
+                    </div>
+                    <div class="bg-green-100 dark:bg-green-900/50 p-3 rounded-full">
+                        <i data-lucide="calendar" class="w-6 h-6 text-green-600 dark:text-green-400"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white dark:bg-slate-800 p-6 rounded-lg shadow-sm border border-slate-200 dark:border-slate-700">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm font-medium text-slate-600 dark:text-slate-400">Média de Pontuação</p>
+                        <p id="average-score" class="text-2xl font-bold text-slate-900 dark:text-white">-</p>
+                    </div>
+                    <div class="bg-yellow-100 dark:bg-yellow-900/50 p-3 rounded-full">
+                        <i data-lucide="star" class="w-6 h-6 text-yellow-600 dark:text-yellow-400"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white dark:bg-slate-800 p-6 rounded-lg shadow-sm border border-slate-200 dark:border-slate-700">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm font-medium text-slate-600 dark:text-slate-400">Taxa de Conclusão</p>
+                        <p id="completion-rate" class="text-2xl font-bold text-slate-900 dark:text-white">-</p>
+                    </div>
+                    <div class="bg-purple-100 dark:bg-purple-900/50 p-3 rounded-full">
+                        <i data-lucide="check-circle" class="w-6 h-6 text-purple-600 dark:text-purple-400"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Interviews List -->
+        <div class="bg-white dark:bg-slate-800 rounded-lg shadow-sm border border-slate-200 dark:border-slate-700">
+            <div class="p-6 border-b border-slate-200 dark:border-slate-700">
+                <h3 class="text-lg font-semibold text-slate-900 dark:text-white">Entrevistas Recentes</h3>
+            </div>
+            <div class="p-6">
+                <div id="interviews-list" class="space-y-4">
+                    <div id="loading-state" class="text-center py-8">
+                        <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600"></div>
+                        <p class="mt-2 text-slate-600 dark:text-slate-400">Carregando entrevistas...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+
+        <!-- Training Tab Content -->
+        <div id="training-content" class="tab-content hidden">
+            <div class="mb-8">
+                <h2 class="text-3xl font-bold text-slate-900 dark:text-white mb-2">Treinamento da IA</h2>
+                <p class="text-slate-600 dark:text-slate-400">Configure e gerencie prompts para personalizar o comportamento da IA em entrevistas e atendimentos.</p>
+            </div>
+
+            <!-- Training Stats -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+                <div class="bg-white dark:bg-slate-800 p-6 rounded-lg shadow-sm border border-slate-200 dark:border-slate-700">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm font-medium text-slate-600 dark:text-slate-400">Prompts Ativos</p>
+                            <p id="active-prompts" class="text-2xl font-bold text-slate-900 dark:text-white">-</p>
+                        </div>
+                        <div class="bg-blue-100 dark:bg-blue-900/50 p-3 rounded-full">
+                            <i data-lucide="brain" class="w-6 h-6 text-blue-600 dark:text-blue-400"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white dark:bg-slate-800 p-6 rounded-lg shadow-sm border border-slate-200 dark:border-slate-700">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm font-medium text-slate-600 dark:text-slate-400">Sessões de Treino</p>
+                            <p id="training-sessions" class="text-2xl font-bold text-slate-900 dark:text-white">-</p>
+                        </div>
+                        <div class="bg-green-100 dark:bg-green-900/50 p-3 rounded-full">
+                            <i data-lucide="play-circle" class="w-6 h-6 text-green-600 dark:text-green-400"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white dark:bg-slate-800 p-6 rounded-lg shadow-sm border border-slate-200 dark:border-slate-700">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm font-medium text-slate-600 dark:text-slate-400">Categorias</p>
+                            <p id="prompt-categories" class="text-2xl font-bold text-slate-900 dark:text-white">-</p>
+                        </div>
+                        <div class="bg-yellow-100 dark:bg-yellow-900/50 p-3 rounded-full">
+                            <i data-lucide="tag" class="w-6 h-6 text-yellow-600 dark:text-yellow-400"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white dark:bg-slate-800 p-6 rounded-lg shadow-sm border border-slate-200 dark:border-slate-700">
+                    <div class="flex items-center justify-between">
+                        <div>
+                            <p class="text-sm font-medium text-slate-600 dark:text-slate-400">Última Atualização</p>
+                            <p id="last-update" class="text-sm font-bold text-slate-900 dark:text-white">-</p>
+                        </div>
+                        <div class="bg-purple-100 dark:bg-purple-900/50 p-3 rounded-full">
+                            <i data-lucide="clock" class="w-6 h-6 text-purple-600 dark:text-purple-400"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Training Actions -->
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-8">
+                <!-- Upload Prompts -->
+                <div class="bg-white dark:bg-slate-800 rounded-lg shadow-sm border border-slate-200 dark:border-slate-700">
+                    <div class="p-6 border-b border-slate-200 dark:border-slate-700">
+                        <h3 class="text-lg font-semibold text-slate-900 dark:text-white">Upload em Massa</h3>
+                        <p class="text-sm text-slate-600 dark:text-slate-400">Importe múltiplos prompts via arquivo</p>
+                    </div>
+                    <div class="p-6">
+                        <div class="space-y-4">
+                            <!-- Download Template -->
+                            <div class="text-center p-4 bg-slate-50 dark:bg-slate-700 rounded-lg border-2 border-dashed border-slate-300 dark:border-slate-600">
+                                <i data-lucide="download" class="w-8 h-8 mx-auto text-slate-400 mb-2"></i>
+                                <p class="text-sm text-slate-600 dark:text-slate-400 mb-3">Baixe o template para preenchimento</p>
+                                <div class="flex gap-2 justify-center">
+                                    <a href="/templates/prompts-template.csv" download class="bg-blue-600 hover:bg-blue-700 text-white px-3 py-2 rounded-md text-sm transition duration-300 flex items-center gap-2">
+                                        <i data-lucide="file-text" class="w-4 h-4"></i>
+                                        CSV
+                                    </a>
+                                    <a href="/templates/prompts-template.xlsx" download class="bg-green-600 hover:bg-green-700 text-white px-3 py-2 rounded-md text-sm transition duration-300 flex items-center gap-2">
+                                        <i data-lucide="file-spreadsheet" class="w-4 h-4"></i>
+                                        Excel
+                                    </a>
+                                </div>
+                            </div>
+
+                            <!-- Upload Area -->
+                            <div id="upload-area" class="text-center p-6 bg-slate-50 dark:bg-slate-700 rounded-lg border-2 border-dashed border-slate-300 dark:border-slate-600 hover:border-indigo-400 dark:hover:border-indigo-500 transition-colors cursor-pointer" style="position: relative; z-index: 10;">
+                                <i data-lucide="upload" class="w-8 h-8 mx-auto text-slate-400 mb-2"></i>
+                                <p class="text-sm text-slate-600 dark:text-slate-400 mb-2">Clique para selecionar arquivo ou arraste aqui</p>
+                                <p class="text-xs text-slate-500 dark:text-slate-500 mb-3">CSV ou Excel (.xlsx)</p>
+                                
+                                <!-- Botão de seleção mais visível -->
+                                <button type="button" id="select-file-btn" class="bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-md text-sm transition duration-300 flex items-center gap-2 mx-auto">
+                                    <i data-lucide="folder-open" class="w-4 h-4"></i>
+                                    Selecionar Arquivo
+                                </button>
+                                
+                                <input type="file" id="file-input" accept=".csv,.xlsx" class="hidden">
+                            </div>
+
+                            <!-- Upload Progress -->
+                            <div id="upload-progress" class="hidden">
+                                <div class="bg-slate-200 dark:bg-slate-600 rounded-full h-2">
+                                    <div id="progress-bar" class="bg-indigo-600 h-2 rounded-full transition-all duration-300" style="width: 0%"></div>
+                                </div>
+                                <p id="progress-text" class="text-sm text-slate-600 dark:text-slate-400 mt-1">Processando...</p>
+                            </div>
+
+                            <!-- Preview Area -->
+                            <div id="preview-area" class="hidden">
+                                <h4 class="text-sm font-semibold text-slate-900 dark:text-white mb-2">Preview dos Dados:</h4>
+                                <div id="preview-content" class="max-h-40 overflow-y-auto text-xs bg-slate-100 dark:bg-slate-600 p-2 rounded border"></div>
+                                <div class="flex gap-2 mt-3">
+                                    <button id="confirm-upload" class="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded text-sm transition duration-300">
+                                        Confirmar Importação
+                                    </button>
+                                    <button id="cancel-upload" class="bg-slate-500 hover:bg-slate-600 text-white px-3 py-1 rounded text-sm transition duration-300">
+                                        Cancelar
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Create New Prompt Form -->
+                <div class="bg-white dark:bg-slate-800 rounded-lg shadow-sm border border-slate-200 dark:border-slate-700">
+                    <div class="p-6 border-b border-slate-200 dark:border-slate-700">
+                        <h3 class="text-lg font-semibold text-slate-900 dark:text-white">Criar Novo Prompt</h3>
+                        <p class="text-sm text-slate-600 dark:text-slate-400">Adicione um novo prompt para treinar a IA</p>
+                    </div>
+                    <div class="p-6">
+                        <form id="prompt-form" class="space-y-6">
+                            <!-- Informações Básicas -->
+                            <div class="space-y-4">
+                                <h4 class="text-md font-semibold text-slate-900 dark:text-white border-b border-slate-200 dark:border-slate-700 pb-2">Informações Básicas</h4>
+                                
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Nome do Prompt</label>
+                                        <input type="text" id="prompt-name" required class="w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 text-slate-900 dark:text-slate-100 bg-white dark:bg-slate-700" placeholder="Ex: Pergunta sobre experiência">
+                                    </div>
+                                    
+                                    <div>
+                                        <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Categoria</label>
+                                        <select id="prompt-category" required class="w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 text-slate-900 dark:text-slate-100 bg-white dark:bg-slate-700">
+                                            <option value="">Selecione uma categoria</option>
+                                            <option value="INTERVIEW">Entrevista</option>
+                                            <option value="CUSTOMER_SERVICE">Atendimento ao Cliente</option>
+                                            <option value="SALES">Vendas</option>
+                                            <option value="TECHNICAL">Técnico</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Tipo de Prompt</label>
+                                        <select id="prompt-type" required class="w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 text-slate-900 dark:text-slate-100 bg-white dark:bg-slate-700">
+                                            <option value="">Selecione um tipo</option>
+                                            <option value="INITIAL_MESSAGE">Mensagem Inicial</option>
+                                            <option value="FOLLOW_UP">Pergunta de Acompanhamento</option>
+                                            <option value="EVALUATION">Avaliação</option>
+                                            <option value="CUSTOM">Personalizado</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <div>
+                                        <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Dificuldade</label>
+                                        <select id="prompt-difficulty" class="w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 text-slate-900 dark:text-slate-100 bg-white dark:bg-slate-700">
+                                            <option value="EASY">Fácil</option>
+                                            <option value="MEDIUM" selected>Médio</option>
+                                            <option value="HARD">Difícil</option>
+                                            <option value="EXPERT">Especialista</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Configurações de Linguagem e Comportamento -->
+                            <div class="space-y-4">
+                                <h4 class="text-md font-semibold text-slate-900 dark:text-white border-b border-slate-200 dark:border-slate-700 pb-2">Linguagem e Comportamento</h4>
+                                
+                                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                                    <div>
+                                        <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Idioma</label>
+                                        <select id="prompt-language" class="w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 text-slate-900 dark:text-slate-100 bg-white dark:bg-slate-700">
+                                            <option value="pt-BR" selected>Português (Brasil)</option>
+                                            <option value="en-US">English (US)</option>
+                                            <option value="es-ES">Español</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <div>
+                                        <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Comportamento</label>
+                                        <select id="prompt-behavior" class="w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 text-slate-900 dark:text-slate-100 bg-white dark:bg-slate-700">
+                                            <option value="PROFESSIONAL" selected>Profissional</option>
+                                            <option value="FRIENDLY">Amigável</option>
+                                            <option value="FORMAL">Formal</option>
+                                            <option value="CASUAL">Casual</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <div>
+                                        <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Tom</label>
+                                        <select id="prompt-tone" class="w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 text-slate-900 dark:text-slate-100 bg-white dark:bg-slate-700">
+                                            <option value="NEUTRAL" selected>Neutro</option>
+                                            <option value="POSITIVE">Positivo</option>
+                                            <option value="ENCOURAGING">Encorajador</option>
+                                            <option value="CHALLENGING">Desafiador</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Conteúdo e Contexto -->
+                            <div class="space-y-4">
+                                <h4 class="text-md font-semibold text-slate-900 dark:text-white border-b border-slate-200 dark:border-slate-700 pb-2">Conteúdo e Contexto</h4>
+                                
+                                <div>
+                                    <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Conteúdo do Prompt</label>
+                                    <textarea id="prompt-content" required rows="4" class="w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 text-slate-900 dark:text-slate-100 bg-white dark:bg-slate-700" placeholder="Digite o conteúdo do prompt aqui..."></textarea>
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Contexto Específico</label>
+                                    <textarea id="prompt-context" rows="3" class="w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 text-slate-900 dark:text-slate-100 bg-white dark:bg-slate-700" placeholder="Descreva o contexto específico onde este prompt será usado..."></textarea>
+                                </div>
+                                
+                                <div>
+                                    <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Resposta Esperada</label>
+                                    <textarea id="prompt-expected-response" rows="3" class="w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 text-slate-900 dark:text-slate-100 bg-white dark:bg-slate-700" placeholder="Descreva o tipo de resposta esperada do candidato..."></textarea>
+                                </div>
+                            </div>
+
+                            <!-- Critérios de Avaliação -->
+                            <div class="space-y-4">
+                                <h4 class="text-md font-semibold text-slate-900 dark:text-white border-b border-slate-200 dark:border-slate-700 pb-2">Critérios de Avaliação</h4>
+                                
+                                <div>
+                                    <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Critérios de Avaliação</label>
+                                    <textarea id="prompt-evaluation-criteria" rows="3" class="w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 text-slate-900 dark:text-slate-100 bg-white dark:bg-slate-700" placeholder="Liste os critérios específicos para avaliar a resposta..."></textarea>
+                                </div>
+                                
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Limite de Tempo (segundos)</label>
+                                        <input type="number" id="prompt-time-limit" min="30" max="600" class="w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 text-slate-900 dark:text-slate-100 bg-white dark:bg-slate-700" placeholder="Ex: 120">
+                                    </div>
+                                    
+                                    <div>
+                                        <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Palavras-chave (separadas por vírgula)</label>
+                                        <input type="text" id="prompt-keywords" class="w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 text-slate-900 dark:text-slate-100 bg-white dark:bg-slate-700" placeholder="Ex: experiência, liderança, comunicação">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Configurações Avançadas -->
+                            <div class="space-y-4">
+                                <h4 class="text-md font-semibold text-slate-900 dark:text-white border-b border-slate-200 dark:border-slate-700 pb-2">Configurações Avançadas</h4>
+                                
+                                <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                                    <div>
+                                        <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Prioridade</label>
+                                        <select id="prompt-priority" class="w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 text-slate-900 dark:text-slate-100 bg-white dark:bg-slate-700">
+                                            <option value="0">Baixa</option>
+                                            <option value="1" selected>Normal</option>
+                                            <option value="2">Alta</option>
+                                            <option value="3">Crítica</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <div class="flex items-center justify-center">
+                                        <div class="flex items-center">
+                                            <input type="checkbox" id="prompt-active" checked class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-slate-300 rounded">
+                                            <label for="prompt-active" class="ml-2 text-sm text-slate-700 dark:text-slate-300">Prompt Ativo</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="flex justify-end">
+                                <button type="submit" class="bg-indigo-600 hover:bg-indigo-700 text-white px-6 py-2 rounded-md transition duration-300 flex items-center gap-2">
+                                    <i data-lucide="plus" class="w-4 h-4"></i>
+                                    Criar Prompt
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Training Session -->
+                <div class="bg-white dark:bg-slate-800 rounded-lg shadow-sm border border-slate-200 dark:border-slate-700">
+                    <div class="p-6 border-b border-slate-200 dark:border-slate-700">
+                        <h3 class="text-lg font-semibold text-slate-900 dark:text-white">Sessão de Treinamento</h3>
+                        <p class="text-sm text-slate-600 dark:text-slate-400">Execute uma sessão de treinamento com os prompts ativos</p>
+                    </div>
+                    <div class="p-6">
+                        <form id="training-form" class="space-y-4">
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Nome da Sessão</label>
+                                <input type="text" id="session-name" required class="w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 text-slate-900 dark:text-slate-100 bg-white dark:bg-slate-700" placeholder="Ex: Treinamento Atendimento Q1 2025">
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Descrição</label>
+                                <textarea id="session-description" rows="3" class="w-full px-3 py-2 border border-slate-300 dark:border-slate-600 rounded-md focus:outline-none focus:ring-2 focus:ring-indigo-500 text-slate-900 dark:text-slate-100 bg-white dark:bg-slate-700" placeholder="Descreva o objetivo desta sessão de treinamento..."></textarea>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-1">Categorias a Incluir</label>
+                                <div class="space-y-2">
+                                    <label class="flex items-center">
+                                        <input type="checkbox" value="INTERVIEW" class="category-checkbox h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-slate-300 rounded">
+                                        <span class="ml-2 text-sm text-slate-700 dark:text-slate-300">Entrevistas</span>
+                                    </label>
+                                    <label class="flex items-center">
+                                        <input type="checkbox" value="CUSTOMER_SERVICE" class="category-checkbox h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-slate-300 rounded">
+                                        <span class="ml-2 text-sm text-slate-700 dark:text-slate-300">Atendimento ao Cliente</span>
+                                    </label>
+                                    <label class="flex items-center">
+                                        <input type="checkbox" value="SALES" class="category-checkbox h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-slate-300 rounded">
+                                        <span class="ml-2 text-sm text-slate-700 dark:text-slate-300">Vendas</span>
+                                    </label>
+                                    <label class="flex items-center">
+                                        <input type="checkbox" value="TECHNICAL" class="category-checkbox h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-slate-300 rounded">
+                                        <span class="ml-2 text-sm text-slate-700 dark:text-slate-300">Técnico</span>
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <button type="submit" class="w-full bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md transition duration-300 flex items-center justify-center gap-2">
+                                <i data-lucide="play" class="w-4 h-4"></i>
+                                Iniciar Treinamento
+                            </button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Prompts List -->
+            <div class="bg-white dark:bg-slate-800 rounded-lg shadow-sm border border-slate-200 dark:border-slate-700">
+                <div class="p-6 border-b border-slate-200 dark:border-slate-700">
+                    <div class="flex justify-between items-center">
+                        <h3 class="text-lg font-semibold text-slate-900 dark:text-white">Prompts Configurados</h3>
+                        <div class="flex gap-2">
+                            <select id="filter-category" class="px-3 py-1 border border-slate-300 dark:border-slate-600 rounded-md text-sm bg-white dark:bg-slate-700 text-slate-900 dark:text-slate-100">
+                                <option value="">Todas as categorias</option>
+                                <option value="INTERVIEW">Entrevista</option>
+                                <option value="CUSTOMER_SERVICE">Atendimento</option>
+                                <option value="SALES">Vendas</option>
+                                <option value="TECHNICAL">Técnico</option>
+                            </select>
+                            <button id="refresh-prompts" class="bg-slate-100 dark:bg-slate-700 hover:bg-slate-200 dark:hover:bg-slate-600 text-slate-700 dark:text-slate-300 px-3 py-1 rounded-md text-sm transition duration-300">
+                                <i data-lucide="refresh-cw" class="w-4 h-4"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <div id="prompts-list" class="space-y-4">
+                        <div id="prompts-loading" class="text-center py-8">
+                            <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-indigo-600"></div>
+                            <p class="mt-2 text-slate-600 dark:text-slate-400">Carregando prompts...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Analytics Tab Content -->
+        <div id="analytics-content" class="tab-content hidden">
+            <div class="mb-8">
+                <h2 class="text-3xl font-bold text-slate-900 dark:text-white mb-2">Analytics</h2>
+                <p class="text-slate-600 dark:text-slate-400">Análise detalhada do desempenho da IA e das entrevistas.</p>
+            </div>
+            <div class="text-center py-12">
+                <i data-lucide="bar-chart-3" class="w-16 h-16 text-slate-400 mx-auto mb-4"></i>
+                <p class="text-slate-600 dark:text-slate-400">Analytics em desenvolvimento...</p>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://unpkg.com/lucide@latest/dist/umd/lucide.js"></script>
+    <script src="https://unpkg.com/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+    <script>
+        lucide.createIcons();
+    </script>
+    <script type="module" src="assets/js/dashboard.js"></script>
+</body>
+</html>

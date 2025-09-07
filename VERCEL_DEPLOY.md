@@ -31,7 +31,7 @@ OPENROUTER_API_KEY=sua_chave_openrouter_aqui
 AI_MODEL=deepseek/deepseek-chat-v3-0324:free
 AI_API_URL=https://openrouter.ai/api/v1/chat/completions
 JWT_SECRET=sua_chave_jwt_secreta_aqui
-CORS_ORIGIN=https://sua-app.vercel.app
+CORS_ORIGIN=https://ai-interview-platform-vert-theta.vercel.app
 LOG_LEVEL=info
 ```
 

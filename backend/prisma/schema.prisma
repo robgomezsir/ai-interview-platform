@@ -51,4 +51,43 @@ model Evaluation {
   @@map("evaluations")
 }
 
+model TrainingPrompt {
+  id              String   @id @default(uuid())
+  name            String
+  category        String   // "INTERVIEW", "CUSTOMER_SERVICE", "SALES", "TECHNICAL"
+  promptType      String   // "INITIAL_MESSAGE", "FOLLOW_UP", "EVALUATION", "CUSTOM"
+  content         String
+  language        String   @default("pt-BR") // "pt-BR", "en-US", "es-ES"
+  behavior        String   @default("PROFESSIONAL") // "PROFESSIONAL", "FRIENDLY", "FORMAL", "CASUAL"
+  tone            String   @default("NEUTRAL") // "NEUTRAL", "POSITIVE", "ENCOURAGING", "CHALLENGING"
+  context         String?  // Contexto específico do prompt
+  expectedResponse String? // Resposta esperada do candidato
+  evaluationCriteria String? // Critérios de avaliação
+  difficulty      String   @default("MEDIUM") // "EASY", "MEDIUM", "HARD", "EXPERT"
+  timeLimit       Int?     // Limite de tempo em segundos
+  keywords        String?  // Palavras-chave relacionadas (JSON array)
+  isActive        Boolean  @default(true)
+  priority        Int      @default(0)
+  metadata        String?  // JSON with additional configuration
+  createdAt       DateTime @default(now()) @map("created_at")
+  updatedAt       DateTime @updatedAt @map("updated_at")
+
+  @@map("training_prompts")
+}
+
+model AITrainingSession {
+  id          String   @id @default(uuid())
+  sessionName String
+  description String?
+  prompts     String   // JSON array of prompt IDs used
+  results     String?  // JSON with training results
+  status      String   @default("PENDING") // "PENDING", "RUNNING", "COMPLETED", "FAILED"
+  startedAt   DateTime?
+  completedAt DateTime?
+  createdAt   DateTime @default(now()) @map("created_at")
+  updatedAt   DateTime @updatedAt @map("updated_at")
+
+  @@map("ai_training_sessions")
+}
+
 // Status values: "IN_PROGRESS", "COMPLETED", "EVALUATED"

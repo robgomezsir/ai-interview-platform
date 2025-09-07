@@ -17,6 +17,7 @@ const { generalLimiter } = require('./middleware/rateLimiter');
 // Import routes
 const interviewRoutes = require('./routes/interviewRoutes');
 const rhRoutes = require('./routes/rhRoutes');
+const trainingRoutes = require('./routes/trainingRoutes');
 
 class Server {
   constructor() {
@@ -98,6 +99,7 @@ class Server {
     // API routes
     this.app.use('/api/interviews', interviewRoutes);
     this.app.use('/api/rh', rhRoutes);
+    this.app.use('/api/training', trainingRoutes);
 
     // Serve static files for frontend
     this.app.use(express.static(path.join(__dirname, '../../frontend/public')));
