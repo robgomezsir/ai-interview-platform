@@ -1,47 +1,46 @@
-
 # Template de Prompts de Treinamento IA
 
 ## Como usar este template:
 
-1. **Baixe o arquivo:** prompts-template.xlsx
+1. **Baixe o arquivo:** prompts-template.xlsx ou prompts-template.csv
 2. **Preencha os campos** com seus prompts personalizados
 3. **Mantenha o formato** das colunas conforme o template
 4. **Valores válidos para cada campo:**
 
 ### Categoria:
-- INTERVIEW (Entrevista)
-- CUSTOMER_SERVICE (Atendimento ao Cliente)
-- SALES (Vendas)
-- TECHNICAL (Técnico)
+- Entrevista
+- Atendimento ao Cliente
+- Vendas
+- Técnico
 
 ### Tipo de Prompt:
-- INITIAL_MESSAGE (Mensagem Inicial)
-- FOLLOW_UP (Pergunta de Acompanhamento)
-- EVALUATION (Avaliação)
-- CUSTOM (Personalizado)
+- Mensagem Inicial
+- Pergunta de Acompanhamento
+- Avaliação
+- Personalizado
 
 ### Idioma:
-- pt-BR (Português Brasil)
-- en-US (English US)
-- es-ES (Español)
+- Português (Brasil)
+- English (US)
+- Español
 
 ### Comportamento:
-- PROFESSIONAL (Profissional)
-- FRIENDLY (Amigável)
-- FORMAL (Formal)
-- CASUAL (Casual)
+- Profissional
+- Amigável
+- Formal
+- Casual
 
 ### Tom:
-- NEUTRAL (Neutro)
-- POSITIVE (Positivo)
-- ENCOURAGING (Encorajador)
-- CHALLENGING (Desafiador)
+- Neutro
+- Positivo
+- Encorajador
+- Desafiador
 
 ### Dificuldade:
-- EASY (Fácil)
-- MEDIUM (Médio)
-- HARD (Difícil)
-- EXPERT (Especialista)
+- Fácil
+- Médio
+- Difícil
+- Especialista
 
 ### Prioridade:
 - 0 (Baixa)
@@ -58,3 +57,19 @@
 - O limite de tempo é em segundos (30-600)
 - Campos de texto podem conter quebras de linha
 - Salve o arquivo como .xlsx ou .csv
+- Todos os valores estão em português brasileiro para facilitar o uso
+
+## Exemplo de preenchimento:
+
+| Campo | Exemplo |
+|-------|---------|
+| Nome do Prompt | "Pergunta sobre liderança" |
+| Categoria | "Entrevista" |
+| Tipo de Prompt | "Pergunta de Acompanhamento" |
+| Conteúdo | "Descreva uma situação onde você demonstrou liderança" |
+| Idioma | "Português (Brasil)" |
+| Comportamento | "Profissional" |
+| Tom | "Neutro" |
+| Dificuldade | "Médio" |
+| Prioridade | 1 |
+| Ativo | true |

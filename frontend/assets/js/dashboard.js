@@ -955,12 +955,58 @@ class DashboardManager {
             'Ativo': 'isActive'
         };
 
-        // Normalize data headers
+        // Map Portuguese values to English values
+        const valueMaps = {
+            category: {
+                'Entrevista': 'INTERVIEW',
+                'Atendimento ao Cliente': 'CUSTOMER_SERVICE',
+                'Vendas': 'SALES',
+                'Técnico': 'TECHNICAL'
+            },
+            promptType: {
+                'Mensagem Inicial': 'INITIAL_MESSAGE',
+                'Pergunta de Acompanhamento': 'FOLLOW_UP',
+                'Avaliação': 'EVALUATION',
+                'Personalizado': 'CUSTOM'
+            },
+            language: {
+                'Português (Brasil)': 'pt-BR',
+                'English (US)': 'en-US',
+                'Español': 'es-ES'
+            },
+            behavior: {
+                'Profissional': 'PROFESSIONAL',
+                'Amigável': 'FRIENDLY',
+                'Formal': 'FORMAL',
+                'Casual': 'CASUAL'
+            },
+            tone: {
+                'Neutro': 'NEUTRAL',
+                'Positivo': 'POSITIVE',
+                'Encorajador': 'ENCOURAGING',
+                'Desafiador': 'CHALLENGING'
+            },
+            difficulty: {
+                'Fácil': 'EASY',
+                'Médio': 'MEDIUM',
+                'Difícil': 'HARD',
+                'Especialista': 'EXPERT'
+            }
+        };
+
+        // Normalize data headers and values
         const normalizedData = data.map(row => {
             const normalizedRow = {};
             Object.keys(row).forEach(key => {
                 const normalizedKey = headerMap[key] || key;
-                normalizedRow[normalizedKey] = row[key];
+                let value = row[key];
+                
+                // Convert Portuguese values to English
+                if (valueMaps[normalizedKey] && valueMaps[normalizedKey][value]) {
+                    value = valueMaps[normalizedKey][value];
+                }
+                
+                normalizedRow[normalizedKey] = value;
             });
             return normalizedRow;
         });
@@ -1110,13 +1156,28 @@ class DashboardManager {
             return;
         }
 
+        // Validate data first
+        const validatedData = this.validateUploadData(this.uploadedData);
+        
+        if (validatedData.length === 0) {
+            this.showError('Nenhum dado válido para importar após validação');
+            return;
+        }
+
         this.showUploadProgress(true);
         
         try {
             let successCount = 0;
             let errorCount = 0;
+            const errors = [];
 
-            for (const promptData of this.uploadedData) {
+            for (let i = 0; i < validatedData.length; i++) {
+                const promptData = validatedData[i];
+                
+                // Update progress
+                const progress = ((i + 1) / validatedData.length) * 100;
+                this.updateUploadProgress(progress, `Processando ${i + 1} de ${validatedData.length} prompts...`);
+                
                 try {
                     const response = await fetch(`${this.apiBaseUrl}/training/prompts`, {
                         method: 'POST',
@@ -1130,14 +1191,26 @@ class DashboardManager {
                         successCount++;
                     } else {
                         errorCount++;
+                        const errorData = await response.json();
+                        errors.push(`Linha ${i + 2}: ${errorData.error || 'Erro desconhecido'}`);
                     }
                 } catch (error) {
                     console.error('Erro ao salvar prompt:', error);
                     errorCount++;
+                    errors.push(`Linha ${i + 2}: Erro de conexão - ${error.message}`);
                 }
             }
 
-            this.showSuccess(`Importação concluída: ${successCount} sucessos, ${errorCount} erros`);
+            // Show results
+            if (successCount > 0) {
+                this.showSuccess(`Importados ${successCount} prompts com sucesso!`);
+            }
+            
+            if (errorCount > 0) {
+                this.showError(`${errorCount} prompts falharam. Verifique o console para detalhes.`);
+                errors.forEach(error => console.error(error));
+            }
+
             this.cancelUpload();
             this.loadTrainingData();
         } catch (error) {
@@ -1145,6 +1218,19 @@ class DashboardManager {
             this.showError('Erro durante a importação em massa');
         } finally {
             this.showUploadProgress(false);
+        }
+    }
+
+    updateUploadProgress(percentage, text) {
+        const progressBar = document.getElementById('progress-bar');
+        const progressText = document.getElementById('progress-text');
+        
+        if (progressBar) {
+            progressBar.style.width = `${percentage}%`;
+        }
+        
+        if (progressText) {
+            progressText.textContent = text;
         }
     }
 
@@ -1216,3 +1302,4 @@ document.addEventListener('DOMContentLoaded', () => {
     console.log('DOM loaded, initializing DashboardManager...');
     new DashboardManager();
 });
+
